@@ -82,6 +82,8 @@ static char	_is_palindrome(unsigned int nb, unsigned int len_nbr)
  *
  * We will travel in our 3 numbers (a b c) until they reach 100
  * To avoid duplicate calcul, we will calcul our palindrome if a <= b <= c
+ * Improvement: we will stop if a != max because we have already travel all possibilities
+ * with b and c modified, so the next bigger palindrome with a modified will be the right
  *
  * @return 0 if no palindrome, else the result to a x b x c
  */
@@ -98,13 +100,20 @@ static unsigned int	_find_palindrome()
     {
       for (b = 999; b >= 100; --b)
 	{
-	  for (c = 999; c >= 100; --c)
+	  if (a <= b)
 	    {
-	      if (a <= b && b <= c)
+	      for (c = 999; c >= 100; --c)
 		{
-		  res = a * b * c;
-		  if (_is_palindrome(res, _len_nbr(res)) && res > bigger)
-		    bigger = res;
+		  if (b <= c)
+		    {
+		      res = a * b * c;
+		      if (_is_palindrome(res, _len_nbr(res)) && res > bigger)
+			{
+			  bigger = res;
+			  if (a < 999)
+			    return (bigger);
+			}
+		    }
 		}
 	    }
 	}
