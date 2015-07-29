@@ -22,8 +22,7 @@ static int	_pow_ten[10] = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 1
  * @param nb: number we want the size
  * @return number length
  */
-static unsigned int	_len_nbr(unsigned int nb)
-{
+static unsigned int	_len_nbr(unsigned int nb) {
   if (nb >= 100000000)
     return (9);
   if (nb >= 10000000)
@@ -42,8 +41,7 @@ static unsigned int	_len_nbr(unsigned int nb)
  * @param len: number length, used to don't calculate it twice or more
  * @return nth digit in number
  */
-static unsigned int	_get_nth_nb(unsigned int nb, unsigned int pos, unsigned int len)
-{
+static unsigned int	_get_nth_nb(unsigned int nb, unsigned int pos, unsigned int len) {
   return (nb % _pow_ten[len - pos] / _pow_ten[len - pos - 1]);
 }
 
@@ -60,8 +58,7 @@ static unsigned int	_get_nth_nb(unsigned int nb, unsigned int pos, unsigned int 
  * @param len_nbr: number length, used to don't calculate it twice or more
  * @return 1 if the number is a palindrome, else 0
  */
-static char	_is_palindrome(unsigned int nb, unsigned int len_nbr)
-{
+static char	_is_palindrome(unsigned int nb, unsigned int len_nbr) {
   unsigned int	len;
   unsigned int	len_sub;
   unsigned int	len_add;
@@ -69,11 +66,10 @@ static char	_is_palindrome(unsigned int nb, unsigned int len_nbr)
   len = len_nbr / 2;
   len_sub = len_nbr / 2;
   len_add = len_nbr / 2 - (len_nbr % 2 == 0 ? 1 : 0);
-  while (--len_sub < len)
-    {
-      if (_get_nth_nb(nb, len_sub, len_nbr) != _get_nth_nb(nb, ++len_add, len_nbr))
-	return (0);
-    }
+  while (--len_sub < len) {
+    if (_get_nth_nb(nb, len_sub, len_nbr) != _get_nth_nb(nb, ++len_add, len_nbr))
+      return (0);
+  }
   return (1);
 }
 
@@ -87,8 +83,7 @@ static char	_is_palindrome(unsigned int nb, unsigned int len_nbr)
  *
  * @return 0 if no palindrome, else the result to a x b x c
  */
-static unsigned int	_find_palindrome()
-{
+static unsigned int	_find_palindrome() {
   int			a;
   int			b;
   int			c;
@@ -96,28 +91,22 @@ static unsigned int	_find_palindrome()
   int			bigger;
 
   bigger = 0;
-  for (a = 999; a >= 100; --a)
-    {
-      for (b = 999; b >= 100; --b)
-	{
-	  if (a <= b)
-	    {
-	      for (c = 999; c >= 100; --c)
-		{
-		  if (b <= c)
-		    {
-		      res = a * b * c;
-		      if (_is_palindrome(res, _len_nbr(res)) && res > bigger)
-			{
-			  bigger = res;
-			  if (a < 999)
-			    return (bigger);
-			}
-		    }
-		}
+  for (a = 999; a >= 100; --a) {
+    for (b = 999; b >= 100; --b) {
+      if (a <= b) {
+	for (c = 999; c >= 100; --c) {
+	  if (b <= c) {
+	    res = a * b * c;
+	    if (_is_palindrome(res, _len_nbr(res)) && res > bigger) {
+	      bigger = res;
+	      if (a < 999)
+		return (bigger);
 	    }
+	  }
 	}
+      }
     }
+  }
   return (bigger);
 }
 
@@ -126,8 +115,7 @@ static unsigned int	_find_palindrome()
  *
  * @return 0
  */
-int	main()
-{
+int	main() {
   printf("result: %d\n", _find_palindrome());
   return (0);
 }
